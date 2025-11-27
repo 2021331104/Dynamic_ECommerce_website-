@@ -60,7 +60,7 @@ if (req.files && (req.files.images || req.files.image)) {
 export const fetchAllProducts = catchAsyncErrors(async (req, res, next) => {
   const { availability, price, category, ratings, search } = req.query;
   const page = parseInt(req.query.page) || 1;
-  const limit = 10;
+  const limit = 12;
   const offset = (page - 1) * limit;
 
   const conditions = [];
