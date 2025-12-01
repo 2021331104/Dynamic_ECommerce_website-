@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../../store/slices/popupSlice";
 
-
 const Sidebar = () => {
   const {authUser} = useSelector(state => state.auth);
   const dispatch = useDispatch();
@@ -48,8 +47,33 @@ const Sidebar = () => {
           <X className="w-5 h-5 text-primary" />
         </button>
       </div>
-
       
+
+      <nav className="p-6">
+        <ul className="space-y-2">
+          {menuItems.filter(Boolean).map((item) => {
+            return (
+              <li key={item.name}>
+                {/* Link component (likely from react-router-dom) */}
+                <Link
+                  to={item.path}
+                  onClick={() => dispatch(toggleSidebar())}
+                  className="flex items-center space-x-3 p-3 rounded-lg glass-card hover:glow-on-hover animate-smooth text-foreground hover:text-primary group"
+                >
+                  {/* Renders the icon associated with the menu item */}
+                  <item.icon className="w-5 h-5 group-hover:text-primary" />
+                  
+                  {/* Renders the name of the menu item */}
+                  <span className="font-medium">{item.name}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+       </nav>
+
+
+    </div>
 
   </>
   );
