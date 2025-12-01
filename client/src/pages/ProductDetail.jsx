@@ -111,7 +111,127 @@ const ProductDetail = () => {
           </div>
           </div>
 
-          
+          <div>
+            <div className="mb-4">
+              <div className="flex space-x-2 mb-4">
+                {new Date() - new Date(product.created_at) <
+                  30 * 24 * 60 * 60 * 1000 && (
+                  <span className="px-2 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded">
+                    NEW
+                  </span>
+                )}
+                {product.ratings >= 4.5 && (
+                  <span className="px-2 py-1 bg-gradient-to-r from-yellow-400 to-rose-500 text-white text-xs font-semibold rounded">
+                    TOP RATED
+                  </span>
+                )}
+              </div>
+              <h1 className="text-3xl font-bold text-foreground mb-2">
+                {product.name}
+              </h1>
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="flex items-center space-x-1">
+                  {[...Array(5)].map((_, i) => {
+                    return (
+                      <Star
+                        key={i}
+                        className={`w-4 h-4 ${
+                          i < Math.floor(product.ratings)
+                            ? "text-yellow-400 fill-current"
+                            : "text-gray-300"
+                        }`}
+                      />
+                    );
+                  })}
+                </div>
+                <span className="text-foreground font-medium">
+                  {product.ratings}
+                </span>
+                <span className="text-muted-foreground"> ({productReviews?.length}) reviews </span>
+              </div>
+              <div className="flex items-center space-x-4 mb-6">
+                <span className="text-2xl font-bold text-primary">
+                  {formatCurrency(product.price)}
+                </span>
+              </div>
+              <div className="flex items-center space-x-4 mb-6">
+                <span className="text-muted-foreground">
+                  Category: {product.category}
+                </span>
+                <span
+                  className={`px-3 py-1 rounded text-sm ${
+                    product.stock > 5
+                      ? "bg-green-500/20 text-green-400"
+                      : product.stock > 0
+                      ? "bg-yellow-500/20 text-yellow-400"
+                      : "bg-red-500/20 text-red-400"
+                  }`}
+                >
+                  {product.stock > 5
+                    ? "In Stock"
+                    : product.stock > 0
+                    ? "Limited Stock"
+                    : "Out of Stock"}
+                </span>
+              </div>
+
+
+
+              <div className="glass-card p-6 mb-6">
+                <div className="flex items-center space-x-4 mb-6">
+                  <span className="text-lg font-medium">Quantity:</span>
+                  <div className="flex items-center space-x-3">
+                    <button
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="p-2 glass-card hover:glow-on-hover animate-smooth"
+                    >
+                      <Minus className="w-4 h-4" />
+                    </button>
+                    <span className="w-12 text-center font-semibold text-lg">
+                      {quantity}
+                    </span>
+                    <button
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="p-2 glass-card hover:glow-on-hover animate-smooth"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <button
+                    onClick={handleAddToCart}
+                    disabled={product.stock === 0}
+                    className="flex items-center justify-center space-x-2 py-3 gradient-primary text-primary-foreground rounded-lg hover:glow-on-hover animate-smooth font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <ShoppingCart className="w-5 h-5" />
+                    <span>Add to Cart</span>
+                  </button>
+                  <button
+                    disabled={product.stock === 0}
+                    className="flex items-center justify-center space-x-2 py-3 gradient-primary text-primary-foreground rounded-lg hover:glow-on-hover animate-smooth font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                    onClick={handleBuyNow}
+                  >
+                    <CircleDollarSign className="w-5 h-5"/>
+                    <span>Buy Now</span>
+                  </button>
+                </div>
+                <div className="flex items-center space-x-4 mt-4">
+                  <button className="flex items-center space-x-2 text-muted-foreground hover:text-primary animate-smooth">
+                    <Heart className="w-5 h-5" />
+                    <span>Add to Wishlist</span>
+                  </button>
+                  <button onClick={handleCopyURL} className="flex items-center space-x-2 text-muted-foreground hover:text-primary animate-smooth">
+                    <Share2 className="w-5 h-5" />
+                    <span>Share</span>
+                  </button>
+                </div>
+              </div>
+
+
+
+            </div>
+          </div>     
 
 
   </>);
