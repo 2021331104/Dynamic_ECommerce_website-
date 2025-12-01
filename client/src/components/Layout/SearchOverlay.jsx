@@ -18,6 +18,7 @@ const SearchOverlay = () => {
       navigate(`/products?search=${encodeURIComponent(searchQuery)}`);
     }
   };
+t
   return(
   <>
     <div className="fixed inset-0 z-50">
@@ -38,6 +39,7 @@ const SearchOverlay = () => {
                 <X className="w-5 h-5 text-primary" />
               </button>
             </div>
+
               <div className="relative">
               {/* SEARCH ICON BUTTON */}
               <button
@@ -46,7 +48,7 @@ const SearchOverlay = () => {
               >
                 <Search className="w-5 h-5 text-primary" />
               </button>
-                
+
               <input
                 type="text"
                 placeholder="Search for products..."
@@ -56,6 +58,15 @@ const SearchOverlay = () => {
                 className="w-full pl-12 pr-4 py-4 bg-secondary border border-border rounded-lg focus:outline-none text-foreground placeholder-muted-foreground"
                 autoFocus
               />
+            </div>
+            <div className="mt-6 text-center text-muted-foreground">
+              <p>Start typing to search for products...</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
   </>
   );
 };
