@@ -7,6 +7,18 @@ const SearchOverlay = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { isSearchBarOpen } = useSelector((state) => state.popup);
+
+  if (!isSearchBarOpen) return null;
+
+  const handleSearch = () => {
+    if (searchQuery.trim() !== "") {
+      dispatch(toggleSearchBar());
+      navigate(`/products?search=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+  
 };
 
 export default SearchOverlay;
