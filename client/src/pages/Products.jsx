@@ -94,6 +94,35 @@ return (<>
                 </div>
               </div>
             </div>
+            {/* RATING */}
+            <div className="mb-6">
+              <h3 className="text-lg font-medium text-foreground mb-3">
+                Rating
+              </h3>
+              <div className="space-y-2">
+                {[4, 3, 2, 1].map((rating) => {
+                  return (
+                    <button
+                      key={rating}
+                      onClick={() =>
+                        setSelectedRating(
+                          selectedRating === rating ? 0 : rating
+                        )
+                      }
+                      className={`flex items-center space-x-2 w-full p-2 rounded ${
+                        selectedRating === rating ? "bg-primary/20" : "hover:bg-secondary"
+                      }`}
+                    >
+                      {[...Array(5)].map((_, i) => {
+                        return(
+                        <Star key={i} className={`w-4 h-4 ${i < rating ? "text-yellow-400 fill-current" : "text-gray-300"}`}/>);
+                      })}
+
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
 
 
   </>);
