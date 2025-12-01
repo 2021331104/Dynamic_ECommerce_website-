@@ -25,6 +25,34 @@ const ProductDetail = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("description");
+
+  const handleAddToCart = () => {
+    dispatch(addToCart({ product, quantity }));
+  };
+
+  const handleCopyURL = () => {
+    const currentURL = window.location.href;
+    navigator.clipboard
+      .writeText(currentURL)
+      .then(() => {
+        toast.success("URL Copied ", currentURL);
+      })
+      .catch((err) => {
+        console.error("Failed to copy:", err);
+      });
+  };
+  const navigateTo = useNavigate();
+  const handleBuyNow=()=>{
+    dispatch(addToCart({product,quantity}));
+    navigateTo("/payment")
+  }
+
+  useEffect(() => {
+    dispatch(fetchProductDetails(id));
+  }, [dispatch, id]);
+
+
+
   
 };
 
