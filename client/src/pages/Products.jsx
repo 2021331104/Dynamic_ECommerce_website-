@@ -183,7 +183,65 @@ return (<>
                 })}
               </div>
             </div>
+        {/* MAIN CONTENT */}
+        <div className="flex-1">
+          {/* SEARCH BAR */}
+          <div className="mb-8 flex max-[440px]:flex-col items-center gap-2">
+            <div className="relative w-[-webkit-fill-available]">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search Products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 bg-secondary border border-border rounded-lg focus:outline-none text-foreground placeholder-muted-foreground"
+              />
+            </div>
+            <button
+              className="relative inline-flex items-center justify-center p-0.5 
+              overflow-hidden text-sm font-medium text-gray-900 rounded-lg group 
+              bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 
+              group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 
+              focus:outline-none focus:ring-pink-200 
+              dark:focus:ring-purple-800 max-[440px]:min-w-full min-w-[132px]"
+              onClick={() => dispatch(toggleAIModal())}
+            >
+              <span
+                className="relative w-full px-5 py-3 transition-all ease-in duration-75 
+                bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent 
+                dark:group-hover:bg-transparent flex justify-center items-center gap-2"
+              >
+                <Sparkles className="w-5 h-5" />
+                <span>AI Search</span>
+              </span>
+            </button>
 
+          </div>
+          {/* PRODUCTS GRID */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+
+          {/* PAGINATION */}
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
+          )}
+
+          {/* No Results */}
+          {products.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground text-lg">
+                No products found matching your criteria.
+              </p>
+            </div>
+          )}
+        </div>
 
 
   </>);
