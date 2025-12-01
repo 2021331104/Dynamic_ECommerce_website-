@@ -123,6 +123,67 @@ return (<>
                 })}
               </div>
             </div>
+            {/* AVAILABILITY */}
+            <div className="mb-6">
+              <h3 className="text-lg font-medium text-foreground mb-3">
+                Availability
+              </h3>
+              <div className="space-y-2">
+                {["in-stock", "limited", "out-of-stock"].map((status) => {
+                  return (
+                    <button
+                      key={status}
+                      onClick={() =>
+                        setAvailability(
+                          availability === status ? "" : status
+                        )
+                      }
+                      className={`w-full p-2 text-left rounded ${
+                        availability === status
+                          ? "bg-primary/20"
+                          : "hover:bg-secondary"
+                      }`}
+                    >
+                      {status === "in-stock"
+                        ? "In Stock"
+                        : status === "limited"
+                        ? "Limited Stock"
+                        : "Out of Stock"}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            {/* CATEGORY */}
+            <div className="mb-6">
+              <h3 className="text-lg font-medium text-foreground mb-3">
+                Category
+              </h3>
+              <div className="space-y-2">
+                <button
+                  onClick={() => setSelectedCategory("")}
+                  className={`w-full p-2 text-left rounded ${
+                    !selectedCategory
+                      ? "bg-primary/20"
+                      : "hover:bg-secondary"
+                  }`}
+                >All Categories
+                </button>
+                {categories.map((category) => {
+                  return(
+                  <button key={category.id} onClick={() => setSelectedCategory(category.name)}
+                    className={`w-full p-2 text-left rounded ${
+                    selectedCategory===category.name
+                      ? "bg-primary/20"
+                      : "hover:bg-secondary"
+                  }`}
+                  >
+                    {category.name}
+                  </button>);
+                })}
+              </div>
+            </div>
+
 
 
   </>);
