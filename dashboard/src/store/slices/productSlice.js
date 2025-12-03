@@ -65,4 +65,67 @@ const productSlice = createSlice({
     },
   },
 });
+export const createNewProduct = (data) => async (dispatch) => {
+  dispatch(productSlice.actions.createProductRequest());
+  await axiosInstance
+    .post("/product/admin/create", data)
+    .then((res) => {
+      dispatch(productSlice.actions.createProductSuccess(res.data.product));
+      toast.success(res.data.message || "Product created successfully.");
+      dispatch(toggleCreateProductModal());
+    })
+    .catch((error) => {
+      dispatch(productSlice.actions.createProductFailed());
+      toast.error(error.response?.data?.message || "Failed to create product.");
+    });
+};
+
+export const fetchAllProducts = (page) => async (dispatch) => {
+  dispatch(productSlice.actions.getAllProductsRequest());
+  await axiosInstance
+    .get(`/product?page=${page || 1}`)
+    .then((res) => {
+      dispatch(productSlice.actions.getAllProductsSuccess(res.data));
+    })
+    .catch((error) => {
+      dispatch(productSlice.actions.getAllProductsFailed());
+    });
+};
+
+export const updateProduct = (data, id) => async (dispatch) => {
+  dispatch(productSlice.actions.updateProductRequest());
+  await axiosInstance
+    .put(`/product/admin/update/${id}`, data)
+    .then((res) => {
+      dispatch(
+        productSlice.actions.updateProductSuccess(res.data.updatedProduct)
+      );
+      toast.success(res.data.message || "Product updated successfully.");
+      dispatch(toggleUpdateProductModal());
+    })
+    .catch((error) => {
+      dispatch(productSlice.actions.updateProductFailed());
+      toast.error(error.response?.data?.message || "Failed to update product.");
+    });
+};
+
+export const deleteProduct = (id, page) => async (dispatch, getState) => {
+  dispatch(productSlice.actions.deleteProductRequest());
+  await axiosInstance.delete(`/product/admin/delete/${id}`).then((res) => {
+    dispatch(productSlice.actions.deleteProductSuccess(id));
+    toast.success(res.data.message || "Product deleted successfully.");
+
+    const state = getState();
+    const updatedTotal = state.product.totalProducts;
+    const updatedMaxPage = Math.ceil(updatedTotal / 10) || 1;
+
+    const validPage = Math.min(page, updatedMaxPage);
+    dispatch(fetchAllProducts(validPage));
+  }).catch(error=>{
+    dispatch(productSlice.actions.deleteProductFailed());
+    toast.error(error.response?.data?.message || "Failed to delete product.");
+  });
+};
+
+export default productSlice.reducer;
 
