@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+build/
+dist/
+dist-ssr/
+coverage/
+.vite/
+.rpt2_cache/
+.parcel-cache/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment and secrets
+.env
+.env.*
+*.env
+server/config/config.env
+client/.env
+client/.env.*
+dashboard/.env
+dashboard/.env.*
+
+# Local tooling and OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Uploads and temp assets
+server/uploads/
+uploads/
+*.tmp
+*.temp
+*.pid
+*.seed
+*.tgz
+
+# Platform
+.vercel/
+.turbo/
